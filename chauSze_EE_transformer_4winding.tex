@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage{circuitikz}
+
+\begin{document}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ELEC 467 Electric Machines and Transformers
+% Single Phase Transformer Figure 7
+% Written by Sze "Ron" Chau, November 2014
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Need to find a way to simplify phase dots
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\begin{circuitikz}[american voltages,european resistors]
+
+\draw
+% terminals
+node(E2L) at (4,0){}
+node(E2R) at (7,0){}
+node(E3L) at (0,6){}
+node(E3R) at (7,6){}
+node(H1)  at (0,2)[above]{\footnotesize$H_{1}$}
+node(H2)  at (3,2)[above]{\footnotesize$H_{2}$}
+node(H3)  at (4,2)[above]{\footnotesize$H_{3}$}
+node(H4)  at (7,2)[above]{\footnotesize$H_{4}$}
+node(X1)  at (0,4)[below]{\footnotesize$X_{1}$}
+node(X2)  at (3,4)[below]{\footnotesize$X_{2}$}
+node(X3)  at (4,4)[below]{\footnotesize$X_{3}$}
+node(X4)  at (7,4)[below]{\footnotesize$X_{4}$}
+
+% components
+(0,0) node[left]{} -- (0,2)
+        to[L](3,2) -- (3,0)
+        to[sV=$E_{1}$](0,0)
+(E2L)   to[short,o-](4,2)
+        to[L](7,2)
+        to[short,-o](E2R)
+(E3L)   to[short,o-](0,4)
+        to[L](3,4) -- (4,4)
+        to[L](7,4)
+        to[short,-o](E3R)
+
+% phase dots
+node[circ](phaseX1) at ([xshift=0.5cm,yshift=0.5cm]X1){}
+node[circ](phaseX3) at ([xshift=0.5cm,yshift=0.5cm]X3){}
+node[circ](phaseH1) at ([xshift=0.5cm,yshift=-0.5cm]H1){}
+node[circ](phaseH3) at ([xshift=0.5cm,yshift=-0.5cm]H3){}
+;
+
+% E1 and E2 DMM arrows
+\begin{scope}[shorten >= 10pt,shorten <= 10pt,]
+\draw[<->] (E2L) -- node[below] {$E_{2}$} (E2R);
+\draw[<->] (E3L) -- node[above] {$E_{3}$} (E3R);
+\end{scope}
+
+% Replicating Michelle's accidental shock :D
+\draw
+(0.5,0) to[short,*-](0.5,-1.5)
+        to[R,l_=$Load_{Michelle}$](2.5,-1.5)
+        to[short,-*](2.5,0)
+;
+
+\end{circuitikz}
+
+\end{document}
