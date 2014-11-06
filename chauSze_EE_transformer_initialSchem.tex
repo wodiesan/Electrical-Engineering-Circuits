@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{circuitikz}
+
+\begin{document}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ELEC 467 Electric Machines and Transformers
+% Single Phase Transformer Diagram(s)
+% Written by Sze "Ron" Chau, November 2014
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% (first attempt at circuitikz)
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{circuitikz}
+\draw
+% transformer windings
+(0,0)    node[transformer](T) {}
+(T.west) node{$V_1$}
+(T.east) node{$V_2$}
+
+% nodes for H1, H2, V1
+node[ocirc](A)  at ([xshift=-1cm]T.A1) {}
+node(H1)        at ([yshift=1cm]A) {}
+node(V1+)       at ([xshift=-1cm]A) {}
+node[ocirc](B)  at ([xshift=-1cm]T.A2) {}
+node(H2)        at ([yshift=-1cm]B) {}
+node(V1-)       at ([xshift=-1cm]B) {}
+
+% nodes for X1, X2, V2
+node[ocirc](C)  at ([xshift=1cm]T.B1) {}
+node(V2+)       at ([xshift=0.5cm]C) {}
+node(X1)        at ([yshift=1cm]V2+) {}
+node[ocirc](D)  at ([xshift=1cm]T.B2) {}
+node(V2-)       at ([xshift=0.5cm]D) {}
+node(X2)        at ([yshift=-1cm]V2-) {}
+
+% phase dots
+node[circ](E)   at ([xshift=0.4cm,yshift=-5pt]T.A1) {} 
+node[circ](F)   at ([xshift=-0.4cm,yshift=-5pt]T.B1) {}
+
+% to variac
+(T.A1)  to[-o] node[above]{$H_{1}$}(A)
+        to[short] (V1+)
+(T.A2)  to[-o] node[below]{$H_{2}$}(B)
+        to[short] (V1-)
+(V1+)   to[vsourcesin] node[left]{variac} (V1-)
+
+% H1 to X1
+(T.B1)  to[-o] node[above]{$X_{1}$}(C)
+        to[short](V2+)
+        to[short](X1)
+        to[short](H1)
+        to[short](A)
+
+% X2 to H2
+(T.B2)  to [-o] node[below]{$X_{2}$}(D)
+        to[short](V2-)
+        to[short](X2)
+        to[european voltage source]node[below]{$V = V_{1} - V_{2}$}(H2)
+        to[short](B)
+;
+
+\end{circuitikz}
+
+\end{document}
