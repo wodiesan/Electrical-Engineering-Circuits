@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{circuitikz}
+
+\begin{document}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ELEC 467 Electric Machines and Transformers
+% Single Phase Transformer Figure 7
+% Written by Sze "Ron" Chau, November 2014
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% used foreach statement to improve usability
+% refer to MIT 15 repeating things: the foreach statement
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{circuitikz}[american voltages,european resistors]
+
+% voltage source
+\draw
+(0,0) to[sV_=\footnotesize$E_{1}$](3,0);
+
+% X-sided coils
+\foreach \x in {0,4}
+\foreach \y in {6}
+{
+    \draw (\x,\y) 
+    to[short,o-](\x,\y - 2)
+    to[L](\x + 3,\y - 2)
+    to[short,-o](\x + 3, \y)
+;}
+
+% H-sided coils
+\foreach \x in {0,4}
+\foreach \y in {0}
+{
+    \draw (\x,\y) 
+    to[short,o-](\x,\y + 2)
+    to[L](\x + 3,\y + 2)
+    to[short,-o](\x + 3, \y)
+;}
+
+% DMM connections
+\foreach \xDMM in {0,4}
+\foreach \yDMM in {6}
+{
+    \begin{scope}[shorten >= 10pt,shorten <= 10pt,]
+        \draw[<->](\xDMM,\yDMM) -- (\xDMM + 3,\yDMM);
+    \end{scope}
+}
+\begin{scope}[shorten >= 10pt,shorten <= 10pt,]
+    \draw[<->](4,0) -- (7,0);
+\end{scope}
+
+% terminal markings
+\draw
+node(H1) at (0,2)[above]{\footnotesize$H_{1}$}
+node(H2) at (3,2)[above]{\footnotesize$H_{2}$}
+node(H3) at (4,2)[above]{\footnotesize$H_{3}$}
+node(H4) at (7,2)[above]{\footnotesize$H_{4}$}
+
+node(X1) at (0,4)[below]{\footnotesize$X_{1}$}
+node(X2) at (3,4)[below]{\footnotesize$X_{2}$}
+node(X3) at (4,4)[below]{\footnotesize$X_{3}$}
+node(X4) at (7,4)[below]{\footnotesize$X_{4}$}
+
+node(E2) at (5.5,0)[below]{\footnotesize$E_{2}$}
+node(E3) at (1.5,6)[above]{\footnotesize$E_{3}$}
+node(E4) at (5.5,6)[above]{\footnotesize$E_{4}$}
+
+% phase dots
+node[circ](phaseX1) at ([xshift=0.5cm,yshift=0.5cm]X1){}
+node[circ](phaseX3) at ([xshift=0.5cm,yshift=0.5cm]X3){}
+node[circ](phaseH1) at ([xshift=0.5cm,yshift=-0.5cm]H1){}
+node[circ](phaseH3) at ([xshift=0.5cm,yshift=-0.5cm]H3){}
+;
+
+\end{circuitikz}
+
+\end{document}
