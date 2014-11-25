@@ -1,0 +1,83 @@
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ELEC 467 Electric Machines and Transformers
+% Transformer Equivalent
+% Written by Sze "Ron" Chau, November 2014
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Secondary side is a mirror of the primary
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\documentclass{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[letterpaper, landscape]{geometry}
+\usepackage{amsmath,graphicx}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{calc,decorations.pathreplacing}
+
+\begin{document}
+
+\begin{circuitikz}
+
+\draw (0,0) to[short,*-] (7.5,0);
+\draw (0,4) to[short,*-] (1,4);
+\draw (1,0) to[short,*-] (0,0);
+
+% Ammeter, primary
+\draw (1,4) to[short,*-] (2,4);
+\draw (2,4) to[ammeter, l=$A$](3,4);
+
+% Volt-ammeter, primary
+\draw (3,4) to[short] (4,4);
+\draw (4,4) to[ammeter] (5.5,4);
+\draw (4,3) to[short,-*] (4,0);
+\draw (4,3) to[voltmeter](5.5,3);
+
+% Box up volt-ammeter, primary
+\draw [color=gray,thick](3.5,4.5) rectangle (6,2.5);
+	\node at (3.5,4.5) [above=2.5mm, right=0mm] {$W_1$};
+
+\draw (6.5,3) to[short,-*] (6.5,4);
+\draw (5.5,3) to[short] (6.5,3);
+
+% Variac
+\draw (0,4) to [open,v=$Variac$] (0,0);
+\draw (1,4) to [voltmeter, l=$V_{1}$] (1,0);
+
+% End of primary side
+\draw (5.5,4) to[short] (7.5,4);
+\draw (7.5,4) to[L] (7.5,0);
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% GO GO GADGET MIRROR!
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\begin{scope}[xscale=-1,xshift=-450]
+	\draw (0,0) to[short] (7.5,0);
+	\draw (0,4) to[short] (1,4);
+	\draw (1,4) to[short] (3,4);
+
+	% Volt-ammeter, secondary
+	\draw (3,4) to[short] (4,4);
+	\draw (4,4) to[ammeter] (5.5,4);
+	\draw (4,3) to[short,-*] (4,0);
+	\draw (4,3) to[voltmeter](5.5,3);
+
+	% Box up volt-ammeter, secondary
+	\draw [color=gray,thick](3.5,4.5) rectangle (6,2.5);
+		\node at (3.5,4.5) [above=2.5mm, right=-25mm] {$W_2$};
+
+	\draw (6.5,3) to[short,-*] (6.5,4);
+	\draw (5.5,3) to[short] (6.5,3);
+
+	% voltmeter and load, secondary
+	\draw (1,4) to[short,*-] (2,4);
+	\draw (0,4) to [generic, l=$load$] (0,0);
+	\draw (1,4) to [voltmeter, l_=$V_{2}$] (1,0);
+	\draw (1,0) to[short,*-] (0,0);
+
+	% Beginning of secondary
+	\draw (5.5,4) to[short] (7.5,4);
+	\draw (7.5,4) to[L] (7.5,0);
+\end{scope}
+    
+\end{circuitikz}
+
+\end{document}
